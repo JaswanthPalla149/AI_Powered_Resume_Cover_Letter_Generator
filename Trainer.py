@@ -1,0 +1,142 @@
+# Install required packages
+!pip install -q -U transformers datasets accelerate peft bitsandbytes trl huggingface_hub torch
+
+# Import libraries
+import torch
+from transformers import (
+    AutoModelForCausalLM,
+    AutoTokenizer,
+    BitsAndBytesConfig,
+    TrainingArguments,
+)
+from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training
+from trl import SFTTrainer
+from datasets import Dataset
+import os
+
+# Check GPU availability
+print(f"GPU available: {torch.cuda.is_available()}")
+print(f"GPU name: {torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'None'}")
+print(f"GPU memory: {torch.cuda.get_device_properties(0).total_memory / 1e9 if torch.cuda.is_available() else 0} GB")
+
+
+# Load your training data
+def load_training_data(file_path):
+    """Load the training data from text file"""
+    examples = []
+    with open(file_path, 'r', encoding='utf-8') as f:
+        content = f.read()
+    
+    # Split by double newlines to separate examples
+    raw_examples = content.split('\n\n')
+    
+    for example in raw_examples:
+        if example.strip():  # Skip empty examples
+            examples.append({'text': example.strip()})
+    
+    return examples
+
+# Path to your training data
+train_data_path = "./mistral_training_data.txt"  # Update this path
+
+# Load data
+training_examples = load_training_data(train_data_path)
+print(f"Loaded {len(training_examples)} training examples")
+
+# Convert to Hugging Face Dataset
+dataset = Dataset.from_list(training_examples)
+print(f"Dataset structure: {dataset}")
+
+# Model configuration
+model_name = "mistralai/Mistral-7B-Instruct-v0.2"
+
+# Advanced 4-bit quantization configuration
+bnb_config = BitsAndBytesConfig(
+    load_in_4bit=True,
+    bnb_4bit_quant_type="nf4",           # Use normalized float 4-bit quantization
+    bnb_4bit_compute_dtype=torch.bfloat16, # Compute dtype for efficiency
+    bnb_4bit_use_double_quant=True,      # Use double quantization for better memory efficiency
+)
+
+# Load model with quantization
+print("Loading quantized model and tokenizer...")
+model = AutoModelForCausalLM.from_pretrained(
+    model_name,
+    quantization_config=bnb_config,
+    device_map="auto",
+    trust_remote_code=True,
+    low_cpu_mem_usage=True,
+)
+
+tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
+tokenizer.pad_token = tokenizer.eos_token
+tokenizer.padding_side = "right"
+
+# Prepare model for k-bit training
+model = prepare_model_for_kbit_training(model)
+
+# LoRA configuration for efficient fine-tuning
+peft_config = LoraConfig(
+    lora_alpha=32,          # Higher alpha for better learning
+    lora_dropout=0.05,      # Lower dropout for stability
+    r=16,                   # Rank - lower for more quantization-friendly setup
+    bias="none",
+    task_type="CAUSAL_LM",
+    target_modules=[
+        "q_proj", "k_proj", "v_proj", "o_proj",
+        "gate_proj", "up_proj", "down_proj"
+    ]
+)
+
+# Apply LoRA to model
+model = get_peft_model(model, peft_config)
+
+# Print trainable parameters
+model.print_trainable_parameters()
+training_arguments = TrainingArguments(
+    output_dir="./mistral-job-extractor",
+    num_train_epochs=3,
+    per_device_train_batch_size=2,          # Reduced for quantization
+    gradient_accumulation_steps=4,          # Increased to compensate for smaller batch
+    optim="paged_adamw_8bit",               # Use 8-bit optimizer for quantization
+    save_steps=100,
+    logging_steps=25,
+    learning_rate=1e-4,                     # Lower learning rate for quantized training
+    weight_decay=0.01,
+    fp16=False,                             # Disable fp16 when using bfloat16 compute
+    bf16=False,
+    max_grad_norm=0.3,
+    warmup_ratio=0.05,
+    group_by_length=True,
+    lr_scheduler_type="cosine",
+    report_to="none",
+    eval_strategy="no",                     # CORRECTED: changed from evaluation_strategy
+    save_strategy="steps",                  # CORRECTED: changed from save_strategy
+    dataloader_pin_memory=False,            # Reduce memory usage
+    remove_unused_columns=False,            # Keep all columns for text field
+)
+def formatting_func(example):
+    return example["text"]
+
+# Set the maximum sequence length on the tokenizer
+tokenizer.model_max_length = 1024
+
+trainer = SFTTrainer(
+    model=model,
+    train_dataset=dataset,
+    peft_config=peft_config,
+    args=training_arguments,
+    #packing=False,
+    formatting_func=formatting_func,
+)
+
+# Start training
+print("Starting quantized training...")
+trainer.train()
+
+# Save the fine-tuned model (adapter weights only)
+print("Saving model...")
+trainer.model.save_pretrained("./mistral-job-extractor-final")
+
+# Save tokenizer
+tokenizer.save_pretrained("./mistral-job-extractor-final")

@@ -1,0 +1,11 @@
+generated_resume.tex
+DS.txt
+.env
+user_profile.json
+Mistral-7B-Instruct-v0.2
+mistral-job-extractor/checkpoint-*/
+*.pt
+*.safetensors
+mistral-job-extractor/checkpoint-*/
+*.pt
+*.safetensors

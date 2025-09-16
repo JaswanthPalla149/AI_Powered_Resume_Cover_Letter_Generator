@@ -1,0 +1,252 @@
+\pdfminorversion=4
+\documentclass[]{article}
+
+%%%%%%%%%%%%%%%%%%%
+% Packages/Macros %
+%%%%%%%%%%%%%%%%%%%
+\usepackage{amssymb,latexsym,amsmath}     % Standard packages
+\pdfminorversion=4
+\documentclass[]{article}
+
+%%%%%%%%%%%%%%%%%%%
+% Packages/Macros %
+%%%%%%%%%%%%%%%%%%%
+\usepackage{amssymb,latexsym,amsmath}     % Standard packages
+
+
+%%%%%%%%%%%
+% Margins %
+%%%%%%%%%%%
+\addtolength{\textwidth}{1.0in}
+\addtolength{\textheight}{1.00in}
+\addtolength{\evensidemargin}{-0.75in}\documentclass[a4paper,11pt]{article}
+% \definecolor{darkbrown}{RGB}{101, 67, 33} % Define a dark brown color
+\usepackage{latexsym}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{ragged2e}
+\usepackage[empty]{fullpage}
+\usepackage{wrapfig}
+\usepackage{lipsum}
+\usepackage{tabularx}
+\usepackage{titlesec}
+\usepackage{geometry}
+\usepackage{marvosym}
+\usepackage{verbatim}
+\usepackage{enumitem}
+% \usepackage[hidelinks]{hyperref}
+\usepackage[colorlinks=true, linkcolor=blue, urlcolor=blue, citecolor=blue]{hyperref}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{cfr-lm}
+\usepackage[T1]{fontenc}
+\setlength{\multicolsep}{0pt} 
+\pagestyle{fancy}
+\fancyhf{} % clear all header and footer fields
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\geometry{left=1.4cm, top=0.8cm, right=1.2cm, bottom=1cm}
+% Adjust margins
+% \addtolength{\oddsidemargin}{-0.5in}
+% \addtolength{\evensidemargin}{-0.5in}
+% \addtolength{\textwidth}{1in}
+\usepackage[most]{tcolorbox}
+\tcbset{
+	frame code={}
+	center title,
+	left=0pt,
+	right=0pt,
+	top=0pt,
+	bottom=0pt,
+	colback=gray!20,
+	colframe=white,
+	width=\dimexpr\textwidth\relax,
+	enlarge left by=-2mm,
+	boxsep=4pt,
+	arc=0pt,outer arc=0pt,
+}
+
+\urlstyle{same}
+
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Sections formatting
+\titleformat{\section}{
+  \vspace{-10pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-7pt}]
+
+%-------------------------
+% Custom commands
+\newcommand{\resumeItem}[2]{
+  \item{
+    \textbf{#1}{\hspace{0.5mm}#2 \vspace{-0.5mm}}
+  }
+}
+
+\newcommand{\resumePOR}[3]{
+\vspace{0.5mm}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+        \textbf{#1}\hspace{0.3mm}#2 & \textit{\small{#3}} 
+    \end{tabular*}
+    \vspace{-2mm}
+}
+
+\newcommand{\resumeSubheading}[4]{
+\vspace{0.5mm}\item
+    \begin{tabular*}{0.98\textwidth}[t]{l@{\extracolsep{\fill}}r}
+        \textbf{#1} & \textit{\footnotesize{#4}} \\
+        \textit{\footnotesize{#3}} &  \footnotesize{#2}\\
+    \end{tabular*}
+    \vspace{-2.4mm}
+}
+
+\newcommand{\resumeProject}[4]{
+\vspace{0.5mm}\item
+    \begin{tabular*}{0.98\textwidth}[t]{l@{\extracolsep{\fill}}r}
+        \textbf{#1} & \textit{\footnotesize{#3}} \\
+        \footnotesize{\textit{#2}} & \footnotesize{#4}
+    \end{tabular*}
+    \vspace{-2.4mm}
+}
+
+\newcommand{\resumeSubItem}[2]{\resumeItem{#1}{#2}\vspace{-4pt}}
+
+% \renewcommand{\labelitemii}{$\circ$}
+\renewcommand{\labelitemi}{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=*,labelsep=0mm]}
+\newcommand{\resumeHeadingSkillStart}{\begin{itemize}[leftmargin=*,itemsep=1.7mm, rightmargin=2ex]}
+\newcommand{\resumeItemListStart}{\begin{justify}\begin{itemize}[leftmargin=3ex, rightmargin=2ex, noitemsep,labelsep=1.2mm,itemsep=0mm]\small}
+
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}\vspace{2mm}}
+\newcommand{\resumeHeadingSkillEnd}{\end{itemize}\vspace{-2mm}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\end{justify}\vspace{-2mm}}
+\newcommand{\cvsection}[1]{%
+\vspace{2mm}
+\begin{tcolorbox}
+    \textbf{\large #1}
+\end{tcolorbox}
+    \vspace{-4mm}
+}
+
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}%
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X}%
+\newcolumntype{C}{>{\centering\arraybackslash}X}%
+%---- End of Packages and Functions ------
+
+%----------INFO-----------------
+\newcommand{\name}{Jaswanthroyal}
+\newcommand{\course}{BTech}
+\newcommand{\roll}{cs23b034}
+\newcommand{\phone}{9059790993}
+\newcommand{\emaila}{pallajaswanthroyal@gmail.com}
+\newcommand{\emailb}{cs23b034@iittp.ac.in}
+\newcommand{\github}{JaswanthPalla149}
+\newcommand{\website}{https://example.com/}
+\newcommand{\linkedin}{Palla Jaswanthroyal}
+
+\begin{document}
+\fontfamily{cmr}\selectfont
+
+%----------HEADING-----------------
+\parbox{2.35cm}{%
+  \includegraphics[width=2cm,clip]{logo.png}%
+}\parbox{\dimexpr\linewidth-2.5cm\relax}{
+\begin{tabularx}{\linewidth}{L r}
+  \textbf{\LARGE \name} & \phone\\
+  \course &  \href{mailto:\emailb}{\emailb}\\
+  {Computer Science Engineering} &  
+  \href{https://github.com/JaswanthPalla149}{Github} \\
+  {Indian Institute Of Technology, Tirupati} & \href{https://www.linkedin.com/in/palla-jaswanthroyal-3400b232a}{LinkedIn}
+\end{tabularx}
+}
+
+
+%-----------EDUCATION-----------------
+\section{\textbf{Education}}
+\setlength{\tabcolsep}{5pt}
+\small{\begin{tabularx}
+{\dimexpr\textwidth-1mm\relax}{|c|C|c|c|}
+  \hline
+  \textbf{Degree/Certificate } & \textbf{Institute/Board} & \textbf{CGPA/Percentage} & \textbf{Year}\\
+  \hline
+  B.Tech. (CSE) & Indian Institute of Technology, Tirupati & 7.86 & 2023-2027\\
+  \hline
+  Senior Secondary & BIEAP & 97.4\% & 2023 \\
+  \hline
+  Secondary & BSEAP & 100\% & 2021 \\
+  \hline
+\end{tabularx}}
+\vspace{-2mm}
+
+%-----------EXPERIENCE-----------------
+\section{\textbf{Experience}}
+\resumeSubheading
+      {ViSAL LAB IIT Tirupati}{Tirupati}
+      {UG Researcher}{Jun. 2024 - present}
+      \resumeItemListStart
+        \item {Designed and developed GhostMap, a modular, edge-deployable framework for real-time UAV video analytics on resource-constrained platforms like Raspberry Pi 4B, achieving ~45FPS and 22ms latency per frame. Features plug-and-play AI models, precision geo-projection via an optimized C++ backend, and a dual-layer TCP protocol for robust streaming. Its bandwidth independence and portable architecture make it ideal for autonomous UAV and softwarized IoT networks.}
+        
+        \item {Code, Documentation for setup, Paper - available @ {\href{https://github.com/JaswanthPalla149/GhostMap}{Github}}.}
+      \resumeItemListEnd
+\resumeSubHeadingListStart
+      
+    
+\resumeSubHeadingListEnd
+\vspace{-5.5mm}
+
+%-----------PROJECTS-----------------
+\section{\textbf{Projects}}
+\resumeSubHeadingListStart
+    \resumeProject
+      {Firmadyne}
+      {An Embedded firmware security analysis tool.}
+      {Mar. 2025 - May. 2025}
+      {\href{https://github.com/JaswanthPalla149/firmadyne}{Github}}
+      \resumeItemListStart
+        \item {Worked and understood the working architecture of this tool. Built an updated setup for its dependencies which had outdated setups. Built GUI and an IDE to make it easy for reverse engineering society to work on. Emulated and tested various embedded firmwares.}
+      \resumeItemListEnd
+    
+\resumeSubHeadingListEnd
+\vspace{-5.5mm}
+
+\section{\textbf{Technical Skills}}  
+\resumeHeadingSkillStart  
+\resumeSubItem{Programming: } {C/C++, Python, Java, JavaScript, SQL, Dart}  
+\resumeSubItem{Tools \& OS: } {Git, Jupyter Notebook, Google Colab, Linux, Windows, Gradle, Firebase, Flutter, MongoDB}  
+\resumeSubItem{Libraries/Frameworks: } {Pandas, NumPy, scikit-learn, PyTorch, TensorFlow, Hugging Face-BitsAndBytesConfig, NLTK, SpaCy, Java Swing, Qt Qml}    
+\resumeHeadingSkillEnd  
+
+\section{\textbf{Key Courses Taken}}
+\resumeHeadingSkillStart
+\resumeSubItem{} {Digital Logic Design, Object Oriented Programming, Intro to Data Science and Machine Learning, Software Engineering, Introduction to AI, }
+\resumeHeadingSkillEnd
+
+\section{\textbf{Positions of Responsibility}}
+\vspace{-0.4mm}
+\resumeSubHeadingListStart
+\resumePOR{Career Development Guidance Representative,} {CDGC, IIT Tirupati} {July. 2024 - Jun. 2025}
+    \resumeItemListStart
+        \item {Conducted resume building sessions and industry talks.}
+        
+    \resumeItemListEnd
+
+\resumeSubHeadingListEnd
+\vspace{-4mm}
+
+\section{\textbf{Achievements}}
+\vspace{-0.4mm}
+\resumeSubHeadingListStart
+\resumeSubheading
+{JEE Advanced - AIR 3487}{2023}
+{Cracked JEE Advanced and secured an All India Rank of 3487.}{}
+\resumeSubheading
+{Cent in 10th Class SSC Board Examinations}{2021}
+{Secured the first mark in the state in the SSC Board Examinations (Andhra Pradesh).}{}
+\resumeSubHeadingListEnd
+\vspace{-4mm}
+
+\end{document}
