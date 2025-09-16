@@ -9,15 +9,31 @@ This project introduces an **AI agent** that simplifies the process.
 It reads job descriptions, understands the key requirements, and automatically tailors the student’s resume and cover letter to fit the role.  
 
 ---
-
+## The Reports for SDE Role and Data Science Role are in SDE.pdf, DataScience.pdf respectively
+---
 ## ⚙️ How does it work?
 1. **Input**:  
    - A student’s baseline resume (with core details saved).  
-   - A job description (which may be long, unclear, or complex).  
+   - A job description (which may be long, unclear, or complex, or just too small).  
 
 2. **Processing**:  
-   - The AI agent extracts the important details from the job description.  
-   - Matches these with the student’s background, skills, and experiences.  
+   - The AI agent extracts the important details from the job description.
+   - Gets the output from Flask server in the form of json:
+```
+{
+  "Core Responsibilities": "N/A",
+  "Required Skills": ["SQL", "Python", "Data visualization tools (Tableau or PowerBI)"],
+  "Educational Requirements": ["Bachelor's degree"],
+  "Experience Level": "2+ years",
+  "Preferred Qualifications": "N/A",
+  "Compensation and Benefits": {
+    "Compensation": "$60,000 - $80,000 per year",
+    "Benefits": "N/A"
+  }
+}
+```  
+   - Matches these with the student’s background, skills, and experiences.
+   - Keeps only 3 of the most suited projects and position of responsibilities, best 2 of the experiences.  
    - Plans how the resume and cover letter should be tailored.  
 
 3. **Output**:  
