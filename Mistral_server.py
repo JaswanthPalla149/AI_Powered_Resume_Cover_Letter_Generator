@@ -11,7 +11,6 @@ logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 
-# Global variables to store the model and tokenizer
 generator = None
 
 def load_model():
@@ -22,12 +21,11 @@ def load_model():
     lora_model_path = "./mistral-job-extractor/checkpoint-200"
     
     try:
-        # Load tokenizer
+        
         logger.info("Loading tokenizer...")
         tokenizer = AutoTokenizer.from_pretrained(base_model_path)
         tokenizer.pad_token = tokenizer.eos_token
         
-        # Quantization configuration
         bnb_config = BitsAndBytesConfig(
             load_in_4bit=True,
             bnb_4bit_use_double_quant=True,
@@ -35,7 +33,6 @@ def load_model():
             bnb_4bit_compute_dtype=torch.float16,
         )
         
-        # Load base model with quantization
         logger.info("Loading base model...")
         base_model = AutoModelForCausalLM.from_pretrained(
             base_model_path,
@@ -44,15 +41,12 @@ def load_model():
             trust_remote_code=True,
         )
         
-        # Load adapter weights
         logger.info("Loading adapter weights...")
         model = PeftModel.from_pretrained(base_model, lora_model_path)
         
-        # Merge adapter with base model
         logger.info("Merging adapter with base model...")
         model = model.merge_and_unload()
         
-        # Create pipeline
         logger.info("Creating pipeline...")
         generator = pipeline(
             "text-generation",
@@ -80,24 +74,20 @@ def health_check():
 def extract_job_info():
     """Extract job information from job description"""
     try:
-        # Check if model is loaded
         if generator is None:
             return jsonify({
                 "error": "Model not loaded. Please wait for the server to initialize."
             }), 503
         
-        # Get parameters from query string
         job_title = request.args.get('job_title', '')
         company = request.args.get('company', '')
         job_description = request.args.get('job_description', '')
         
-        # Validate input
         if not job_description.strip():
             return jsonify({
                 "error": "job_description parameter is required"
             }), 400
         
-        # Create the prompt
         prompt = f"""### Instruction:
 Extract the following information from the job description in a structured JSON format.
 The JSON should have exactly these keys: "Core Responsibilities", "Required Skills", "Educational Requirements", "Experience Level", "Preferred Qualifications", "Compensation and Benefits".
@@ -142,7 +132,6 @@ def home():
 if __name__ == '__main__':
     logger.info("Starting Job Extractor Server...")
     
-    # Load model before starting the server
     try:
         load_model()
     except Exception as e:

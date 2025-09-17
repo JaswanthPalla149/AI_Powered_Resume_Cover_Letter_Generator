@@ -19,7 +19,7 @@ from dotenv import load_dotenv
 load_dotenv()
 # Configuration
 FASTAPI_SERVER_URL = "http://127.0.0.1:5000"
-GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')# Replace with your actual API key
+GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
 
 class ResumeGenerationWorker(QThread):
     """Worker thread for handling resume generation to avoid UI freezing"""
@@ -37,19 +37,17 @@ class ResumeGenerationWorker(QThread):
     def run(self):
         try:
             self.progress_updated.emit(10)
-            self.status_updated.emit("Getting required skills from FastAPI server...")
+            self.status_updated.emit("Getting required skills from FLASKAPI server...")
             
-            # Step 1: Get required skills from FastAPI server
             required_skills = self.get_required_skills()
             
             self.progress_updated.emit(30)
             self.status_updated.emit("Preparing data for Gemini API...")
             
-            # Step 2: Prepare data for Gemini API
             job_requirements = {
             "job_title": self.job_data.get('job_title', ''),
             "company": self.job_data.get('company', ''),
-            "required_skills": required_skills   # merging inside job_requirements
+            "required_skills": required_skills   
             }
 
             combined_data = {
@@ -60,13 +58,11 @@ class ResumeGenerationWorker(QThread):
             self.progress_updated.emit(50)
             self.status_updated.emit("Generating resume with Gemini AI...")
             
-            # Step 3: Generate resume using Gemini API
             resume_content = self.generate_resume_with_gemini(combined_data)
             
             self.progress_updated.emit(80)
             self.status_updated.emit("Saving generated resume...")
             
-            # Step 4: Save the generated resume
             self.save_resume_and_cover_letter(resume_content)
             
             self.progress_updated.emit(100)
@@ -83,7 +79,6 @@ class ResumeGenerationWorker(QThread):
             company = self.job_data.get('company', '')
             job_description = self.job_data.get('description', '')
             
-            # Use GET method with query parameters for Flask server
             params = {
                 'job_title': job_title,
                 'company': company,
@@ -95,7 +90,6 @@ class ResumeGenerationWorker(QThread):
             
             result = response.json()
             
-            # Extract the response from the Flask server
             if result.get("success") and "response" in result:
                 return result["response"]
             else:
@@ -111,21 +105,16 @@ class ResumeGenerationWorker(QThread):
         if end_pos == -1:
             raise ValueError("Output format is incorrect. Expected '\\end{document}' in LaTeX resume.")
     
-        # Include the end of document string in LaTeX part
         latex_part = output[:end_pos + len(end_doc_str)].strip()
         cover_letter = output[end_pos + len(end_doc_str):].strip()
     
-        # Clean up LaTeX part if needed (remove possible `````` wrappers)
         latex_part = latex_part.strip("``````").strip()
     
-        # Clean cover letter, e.g. remove **Cover Letter** header if present
         cover_letter = cover_letter.replace("**Cover Letter**", "").strip()
     
-        #Save LaTeX resume
         with open("generated_resume.tex", "w", encoding="utf-8") as f:
             f.write(latex_part)
     
-        # Save Cover Letter
         with open("cover_letter.txt", "w", encoding="utf-8") as f:
             f.write(cover_letter)
     
@@ -293,7 +282,6 @@ class UserProfileApp(QMainWindow):
         personal_group.setLayout(personal_layout)
         scroll_layout.addWidget(personal_group)
         
-        # Education Section
         self.education_group = self.create_section("🎓 Education")
         self.education_layout = QVBoxLayout(self.education_group)
         self.add_education_button = self.create_add_button("Add Education Entry", "🎓")
@@ -301,7 +289,6 @@ class UserProfileApp(QMainWindow):
         self.education_layout.addWidget(self.add_education_button)
         scroll_layout.addWidget(self.education_group)
         
-        # Experience Section
         self.experience_group = self.create_section("💼 Work Experience")
         self.experience_layout = QVBoxLayout(self.experience_group)
         self.add_experience_button = self.create_add_button("Add Work Experience", "💼")
@@ -309,7 +296,6 @@ class UserProfileApp(QMainWindow):
         self.experience_layout.addWidget(self.add_experience_button)
         scroll_layout.addWidget(self.experience_group)
         
-        # Projects Section
         self.projects_group = self.create_section("🚀 Projects")
         self.projects_layout = QVBoxLayout(self.projects_group)
         self.add_project_button = self.create_add_button("Add Project", "🚀")
@@ -317,7 +303,6 @@ class UserProfileApp(QMainWindow):
         self.projects_layout.addWidget(self.add_project_button)
         scroll_layout.addWidget(self.projects_group)
         
-        # Skills Section
         skills_group = self.create_section("⚡ Skills")
         skills_layout = QVBoxLayout(skills_group)
         skills_label = QLabel("Enter your skills (separated by commas):")
@@ -328,7 +313,6 @@ class UserProfileApp(QMainWindow):
         skills_layout.addWidget(self.skills_input)
         scroll_layout.addWidget(skills_group)
         
-        # Positions of Responsibility Section
         self.por_group = self.create_section("🏆 Leadership & Positions of Responsibility")
         self.por_layout = QVBoxLayout(self.por_group)
         self.add_por_button = self.create_add_button("Add Leadership Position", "🏆")
@@ -336,7 +320,6 @@ class UserProfileApp(QMainWindow):
         self.por_layout.addWidget(self.add_por_button)
         scroll_layout.addWidget(self.por_group)
         
-        # Achievements Section
         achievements_group = self.create_section("🌟 Achievements & Awards")
         achievements_layout = QVBoxLayout(achievements_group)
         achievements_label = QLabel("List your achievements (one per line):")
@@ -348,7 +331,6 @@ class UserProfileApp(QMainWindow):
         achievements_layout.addWidget(self.achievements_input)
         scroll_layout.addWidget(achievements_group)
         
-        # Job Application Section
         job_group = self.create_section("📋 Target Job Information")
         job_layout = QGridLayout()
         job_layout.setSpacing(10)
@@ -368,7 +350,6 @@ class UserProfileApp(QMainWindow):
             job_layout.addWidget(input_field, i, 1)
             self.job_fields[field_id] = input_field
         
-        # Job description
         desc_label = QLabel("Job Description:")
         desc_label.setStyleSheet("font-weight: bold; color: #34495e;")
         self.job_fields["job_description"] = QTextEdit()
@@ -380,11 +361,9 @@ class UserProfileApp(QMainWindow):
         job_group.setLayout(job_layout)
         scroll_layout.addWidget(job_group)
         
-        # Set the scroll content
         scroll.setWidget(scroll_content)
         main_layout.addWidget(scroll)
         
-        # Progress section (initially hidden)
         self.progress_frame = QFrame()
         self.progress_frame.setStyleSheet("""
             QFrame {
@@ -443,10 +422,8 @@ class UserProfileApp(QMainWindow):
         
         main_layout.addWidget(button_frame)
         
-        # Set global styles
         self.apply_styles()
         
-        # Create prompt template file if it doesn't exist
         self.create_prompt_template_file()
     
     def create_prompt_template_file(self):
@@ -604,7 +581,6 @@ Please generate the customized resume and cover letter based on the provided inf
             layout.addWidget(input_field, row * 2 + 1, col, 1, 1)
             entry_data[field_key] = input_field
         
-        # Remove button
         remove_button = QPushButton("🗑️ Remove")
         remove_button.setStyleSheet("""
             QPushButton {
@@ -622,7 +598,6 @@ Please generate the customized resume and cover letter based on the provided inf
         """)
         remove_button.clicked.connect(remove_callback)
         
-        # Add remove button to the last position
         total_fields = len(fields_config)
         last_row = ((total_fields - 1) // 2) * 2 + 1
         layout.addWidget(remove_button, last_row + 1, 0, 1, 4)
@@ -666,7 +641,6 @@ Please generate the customized resume and cover letter based on the provided inf
             lambda: self.remove_entry(entry_widget, self.education_layout)
         )
         
-        # Load existing data if provided
         if data:
             for field_key, input_field in entry_data.items():
                 if field_key in data:
@@ -687,7 +661,6 @@ Please generate the customized resume and cover letter based on the provided inf
             lambda: self.remove_entry(entry_widget, self.experience_layout)
         )
         
-        # Load existing data if provided
         if data:
             for field_key, input_field in entry_data.items():
                 if field_key in data:
@@ -709,7 +682,7 @@ Please generate the customized resume and cover letter based on the provided inf
             lambda: self.remove_entry(entry_widget, self.projects_layout)
         )
         
-        # Load existing data if provided
+ 
         if data:
             for field_key, input_field in entry_data.items():
                 if field_key in data:
@@ -732,7 +705,6 @@ Please generate the customized resume and cover letter based on the provided inf
             lambda: self.remove_entry(entry_widget, self.por_layout)
         )
         
-        # Load existing data if provided
         if data:
             for field_key, input_field in entry_data.items():
                 if field_key in data:
@@ -793,11 +765,9 @@ Please generate the customized resume and cover letter based on the provided inf
     def save_user_data(self):
         data = {}
         
-        # Save personal info
         for field_id, field in self.personal_fields.items():
             data[field_id] = field.text().strip()
         
-        # Save education
         data['education'] = []
         for i in range(self.education_layout.count()):
             item = self.education_layout.itemAt(i)
@@ -812,7 +782,6 @@ Please generate the customized resume and cover letter based on the provided inf
                         'year': inputs[3].text().strip()
                     })
         
-        # Save experience
         data['experience'] = []
         for i in range(self.experience_layout.count()):
             item = self.experience_layout.itemAt(i)
@@ -828,7 +797,6 @@ Please generate the customized resume and cover letter based on the provided inf
                         'description': text_edits[0].toPlainText().strip()
                     })
         
-        # Save projects
         data['projects'] = []
         for i in range(self.projects_layout.count()):
             item = self.projects_layout.itemAt(i)
@@ -842,11 +810,9 @@ Please generate the customized resume and cover letter based on the provided inf
                         'description': text_edits[0].toPlainText().strip()
                     })
         
-        # Save skills
         skills_text = self.skills_input.text().strip()
         data['skills'] = [skill.strip() for skill in skills_text.split(',') if skill.strip()]
         
-        # Save POR
         data['por'] = []
         for i in range(self.por_layout.count()):
             item = self.por_layout.itemAt(i)
@@ -860,11 +826,9 @@ Please generate the customized resume and cover letter based on the provided inf
                         'duration': inputs[2].text().strip()
                     })
         
-        # Save achievements
         achievements_text = self.achievements_input.toPlainText().strip()
         data['achievements'] = [ach.strip() for ach in achievements_text.split('\n') if ach.strip()]
         
-        # Save to file
         try:
             with open(self.user_data_file, 'w') as f:
                 json.dump(data, f, indent=2)
@@ -909,24 +873,19 @@ Please generate the customized resume and cover letter based on the provided inf
             msg.exec_()
             return
         
-        # Save user data
         user_data = self.save_user_data()
         if user_data is None:
             return
         
-        # Get job data
         job_data = self.get_job_data()
         
-        # Show progress section
         self.progress_frame.setVisible(True)
         self.progress_bar.setValue(0)
         self.progress_label.setText("Preparing...")
         
-        # Disable generate button
         self.generate_button.setEnabled(False)
         self.generate_button.setText("Generating...")
         
-        # Create and start worker thread
         self.worker = ResumeGenerationWorker(user_data, job_data, None)
         self.worker.progress_updated.connect(self.progress_bar.setValue)
         self.worker.status_updated.connect(self.progress_label.setText)
@@ -972,28 +931,23 @@ Please generate the customized resume and cover letter based on the provided inf
         msg.setDefaultButton(QMessageBox.No)
         
         if msg.exec_() == QMessageBox.Yes:
-            # Clear personal fields
             for field in self.personal_fields.values():
                 field.clear()
             
-            # Clear all dynamic entries
             self.clear_layout_entries(self.education_layout)
             self.clear_layout_entries(self.experience_layout)
             self.clear_layout_entries(self.projects_layout)
             self.clear_layout_entries(self.por_layout)
             
-            # Clear other fields
             self.skills_input.clear()
             self.achievements_input.clear()
             
-            # Clear job fields
             for field in self.job_fields.values():
                 if isinstance(field, QLineEdit):
                     field.clear()
                 else:
                     field.clear()
             
-            # Remove the JSON file if it exists
             if os.path.exists(self.user_data_file):
                 os.remove(self.user_data_file)
             
@@ -1004,7 +958,6 @@ Please generate the customized resume and cover letter based on the provided inf
             success_msg.exec_()
             
     def clear_layout_entries(self, layout):
-        # Remove all widgets except the last one (which is the add button)
         while layout.count() > 1:
             item = layout.itemAt(0)
             widget = item.widget()
@@ -1015,10 +968,8 @@ Please generate the customized resume and cover letter based on the provided inf
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     
-    # Set application style
     app.setStyle('Fusion')
     
-    # Set color palette
     palette = QPalette()
     palette.setColor(QPalette.Window, QColor(248, 249, 250))
     palette.setColor(QPalette.WindowText, QColor(33, 37, 41))

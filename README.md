@@ -1,6 +1,6 @@
 # AI-Powered Resume Tailoring Agent
 
-## 📌 What is this project?
+## What is this project?
 Students often struggle when applying to jobs:  
 - Job descriptions are long, vague, or filled with jargon.  
 - Manually customizing resumes and cover letters for every role is time-consuming.  
@@ -11,7 +11,7 @@ It reads job descriptions, understands the key requirements, and automatically t
 ---
 ## The Reports for SDE Role and Data Science Role are in SDE.pdf, DataScience.pdf respectively
 ---
-## ⚙️ How does it work?
+## How does it work?
 1. **Input**:  
    - A student’s baseline resume (with core details saved).  
    - A job description (which may be long, unclear, or complex, or just too small).  
@@ -42,7 +42,7 @@ It reads job descriptions, understands the key requirements, and automatically t
 
 ---
 
-## 🔑 Under the Hood
+## Under the Hood
 - **Fine-Tuned Model**:  
   We fine-tuned **Mistral-7B-Instruct** with LoRA to specialize in understanding job descriptions and outputting structured data.  
   - Keeps hallucination low.  
@@ -58,7 +58,7 @@ It reads job descriptions, understands the key requirements, and automatically t
 
 ---
 
-## 🚀 User-Facing Features
+## User-Facing Features
 - **Resume Reset & Reuse**  
   Store a baseline resume once → reuse it across all applications.  
 
@@ -77,10 +77,10 @@ It reads job descriptions, understands the key requirements, and automatically t
 
 ---
 
-## 🎯 Why this matters
+## Why this matters
 This tool removes the most **tedious and stressful part of job applications** for students.  
 Instead of spending hours rewriting resumes and cover letters for every role, they can:  
 
-👉 Upload the job description → Click Generate → Get a tailored resume + cover letter instantly.  
+Upload the job description → Click Generate → Get a tailored resume + cover letter instantly.  
 
 It’s fast, reliable, and keeps the focus on what matters: **applying confidently to more opportunities.**
