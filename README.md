@@ -3,6 +3,7 @@
 ## What is this project?
 Students often struggle when applying to jobs:  
 - Job descriptions are long, vague, or filled with jargon.  
+- sometimes it is possible to look at that job description and decide which of the top projects/experiences/POR's are strongly aligning with the job/company.
 - Manually customizing resumes and cover letters for every role is time-consuming.  
 
 This project introduces an **AI agent** that simplifies the process.  
@@ -14,7 +15,7 @@ It reads job descriptions, understands the key requirements, and automatically t
 ---
 ## How does it work?
 1. **Input**:  
-   - A student’s baseline resume (with core details saved).  
+   - A student’s baseline resume details (with core details saved after running the program once on the PC). You can reset the resume of you want but you will have to fill it again.  
    - A job description (which may be long, unclear, or complex, or just too small).  
 
 2. **Processing**:  
@@ -33,7 +34,7 @@ It reads job descriptions, understands the key requirements, and automatically t
   }
 }
 ```  
-   - Matches these with the student’s background, skills, and experiences.
+   - A call to Gemini API matches these with the student’s background, skills, and experiences.
    - Keeps only 3 of the most suited projects and position of responsibilities, best 2 of the experiences.  
    - Plans how the resume and cover letter should be tailored.  
 
@@ -46,12 +47,13 @@ It reads job descriptions, understands the key requirements, and automatically t
 
 ## Under the Hood
 - **Fine-Tuned Model**:  
-  We fine-tuned **Mistral-7B-Instruct** with LoRA to specialize in understanding job descriptions and outputting structured data.  
+  Fine-tuned **Mistral-7B-Instruct** with LoRA to specialize in understanding job descriptions and outputting structured data.
+  - Worked with Llama2-7B-hf and Llama3.1-8B-Instruct, they are too large for the workflow, resources were not sufficient even with the quantization. These models hallucinated too high, the temperature might be of any any range.
   - Keeps hallucination low.  
   - Ensures consistent extraction of relevant skills, responsibilities, and qualifications.  
 
 - **Pipeline**:  
-  - A **Flask API** wraps the model with endpoints like `/extract` and `/generate`.
+  - A **Flask API** wraps the model with endpoints like `/extract` .
     <img width="1302" height="364" alt="Screenshot 2025-09-16 205446" src="https://github.com/user-attachments/assets/6d9b1be6-c20b-4cc7-ac01-9bc5a6064cad" />
   - Resume details are saved once, so the student doesn’t need to re-enter everything every time.  
   - Tailoring is automated with one click. Gemini API is called for this task.
@@ -62,7 +64,7 @@ It reads job descriptions, understands the key requirements, and automatically t
 
 ## User-Facing Features
 - **Resume Reset & Reuse**  
-  Store a baseline resume once → reuse it across all applications.  
+  Store a baseline resume details with good UI, not just like entering the base resume completely. → reuse it across all applications.  
 
 - **One-Click Resume Tailoring**  
   Automatically generate a job-specific version of your resume.  
@@ -78,10 +80,19 @@ It reads job descriptions, understands the key requirements, and automatically t
 <img width="991" height="881" alt="Screenshot 2025-09-16 201307" src="https://github.com/user-attachments/assets/7af08f24-6f26-48dc-959f-38b88247353a" />
 
 ---
+## Getting Started
 
+1. Clone the repository.
+2. Install dependencies for Python, PyQt5, and APIs.
+3. Configure environment variables (`GEMINI_API_KEY`).
+4. Run the Flask API server to host the fine-tuned model - not available on github now.
+5. Launch the desktop app with ./Main..py, enter profile and job info.
+6. Click **Generate AI Resume** to start the pipeline.
+7. Generated resume (LaTeX) and cover letter (text) saved locally.
+---
 ## Why this matters
 This tool removes the most **tedious and stressful part of job applications** for students.  
-Instead of spending hours rewriting resumes and cover letters for every role, they can:  
+Instead of spending time rewriting resumes and cover letters for every role, they can:  
 
 Upload the job description → Click Generate → Get a tailored resume + cover letter instantly.  
 

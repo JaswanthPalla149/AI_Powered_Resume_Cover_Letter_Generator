@@ -1,6 +1,5 @@
 System Design Document
 1. Project Overview
-Project Name: AI Agent for Structured Job Information Extraction and Resume Generation
 
 Objective:
 To build an AI-powered desktop application that automates resume and cover letter generation tailored to any given job description by extracting structured job information from unstructured inputs.
@@ -18,7 +17,7 @@ An AI resume and cover letter generator that personalizes content based on extra
 A user-friendly PyQt5 desktop GUI for user data input, job application input, and managing resume generation and output.
 
 2. Architecture Overview
-   <img width="797" height="720" alt="Screenshot 2025-09-17 105851" src="https://github.com/user-attachments/assets/841798cf-6511-47df-aa3e-2afffc36e1ab" />
+    <img width="797" height="720" alt="Screenshot 2025-09-17 105851" src="https://github.com/user-attachments/assets/841798cf-6511-47df-aa3e-2afffc36e1ab" />
 
 4. Component Breakdown
 A. UserProfileApp (PyQt5 Desktop Application)

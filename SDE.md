@@ -107,8 +107,8 @@ text
 1. Clone the repository.
 2. Install dependencies for Python, PyQt5, and APIs.
 3. Configure environment variables (`GEMINI_API_KEY`).
-4. Run the Flask API server to host the fine-tuned model.
-5. Launch the desktop app, enter profile and job info.
+4. Run the Flask API server to host the fine-tuned model - not available on github now.
+5. Launch the desktop app with ./Main..py, enter profile and job info.
 6. Click **Generate AI Resume** to start the pipeline.
 7. Generated resume (LaTeX) and cover letter (text) saved locally.
 
