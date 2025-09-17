@@ -18,28 +18,9 @@ An AI resume and cover letter generator that personalizes content based on extra
 A user-friendly PyQt5 desktop GUI for user data input, job application input, and managing resume generation and output.
 
 2. Architecture Overview
-text
-+------------------------------+           +-----------------------------+
-|     User Profile Application  |           |      Job Extractor API      |
-|  (PyQt5 Desktop GUI +        +---------->+  (Flask + Fine-tuned Mistral)|
-|   Resume Generation Worker)   |           |                             |
-+--------------+---------------+           +--------------+--------------+
-               |                                           |
-       User Data JSON + Job Description                    |
-               |                                           |
-               +--------------------------+                |
-                                          |               |
-                                          v               v
-                +-------------------------------------------+
-                |        Gemini API (Pre-trained LLM)        |
-                |  Resume and Cover Letter Content Generation|
-                +-------------------------------------------+
-                                          |
-                                Customized Resume + Cover Letter
-                                          |
-                                          v
-                         Saved to files (.tex, .txt) for compilation/display
-3. Component Breakdown
+   <img width="797" height="720" alt="Screenshot 2025-09-17 105851" src="https://github.com/user-attachments/assets/841798cf-6511-47df-aa3e-2afffc36e1ab" />
+
+4. Component Breakdown
 A. UserProfileApp (PyQt5 Desktop Application)
 Purpose: Graphical frontend for data entry (personal, education, experience, skills, job details).
 
