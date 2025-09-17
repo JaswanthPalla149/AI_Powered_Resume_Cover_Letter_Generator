@@ -26,28 +26,8 @@ Manually tailoring resumes and cover letters for each job can be time-consuming 
 
 ## Architecture
 
-+------------------------------+ +-----------------------------+
-| User Profile Application | | Job Extractor API |
-| (PyQt5 Desktop GUI + +---------->+ (Flask + Fine-tuned Mistral)|
-| Resume Generation Worker) | | |
-+--------------+---------------+ +--------------+--------------+
-| |
-User Data JSON + Job Description |
-| |
-+--------------------------+ |
-| |
-v v
-+-------------------------------------------+
-| Gemini API (Pre-trained LLM) |
-| Resume and Cover Letter Content Generation|
-+-------------------------------------------+
-|
-Customized Resume + Cover Letter
-|
-v
-Saved to files (.tex, .txt) for compilation/display
-
-text
+---
+<img width="817" height="653" alt="Screenshot 2025-09-17 105543" src="https://github.com/user-attachments/assets/3e02c9da-5410-4c40-b74f-465a9074afef" />
 
 ---
 
