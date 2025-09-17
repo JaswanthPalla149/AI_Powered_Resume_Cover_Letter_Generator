@@ -40,6 +40,7 @@ It reads job descriptions, understands the key requirements, and automatically t
 3. **Output**:  
    - A **role-specific resume** (no need to manually edit for each job).  
    - A **customized cover letter** aligned with the posting.  
+<img width="797" height="720" alt="Screenshot 2025-09-17 105851" src="https://github.com/user-attachments/assets/eda54789-04e5-4844-a97b-e697636ec6be" />
 
 ---
 
