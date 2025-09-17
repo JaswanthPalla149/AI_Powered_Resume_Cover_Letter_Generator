@@ -26,16 +26,15 @@ def load_training_data(file_path):
     with open(file_path, 'r', encoding='utf-8') as f:
         content = f.read()
     
-    # Split by double newlines to separate examples
     raw_examples = content.split('\n\n')
     
     for example in raw_examples:
-        if example.strip():  # Skip empty examples
+        if example.strip():  
             examples.append({'text': example.strip()})
     
     return examples
 
-train_data_path = "./mistral_training_data.txt"  # Update this path
+train_data_path = "./mistral_training_data.txt" 
 
 training_examples = load_training_data(train_data_path)
 print(f"Loaded {len(training_examples)} training examples")
