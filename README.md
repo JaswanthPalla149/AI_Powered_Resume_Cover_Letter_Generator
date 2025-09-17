@@ -9,7 +9,7 @@ This project introduces an **AI agent** that simplifies the process.
 It reads job descriptions, understands the key requirements, and automatically tailors the student’s resume and cover letter to fit the role.  
 
 ---
-## The Reports for SDE Role and Data Science Role are in [SDE.pdf](https://github.com/JaswanthPalla149/AI_Powered_Resume_Cover_Letter_Generator/blob/main/SDE.pdf), [DataScience.pdf](https://github.com/JaswanthPalla149/AI_Powered_Resume_Cover_Letter_Generator/blob/main/DataScience.pdf) respectively
+## The Reports for SDE Role and Data Science Role are in [SDE-Doc](https://github.com/JaswanthPalla149/AI_Powered_Resume_Cover_Letter_Generator/blob/main/SDE.md), [DataScience-Doc](https://github.com/JaswanthPalla149/AI_Powered_Resume_Cover_Letter_Generator/blob/main/DataScience.md) respectively
 ## Demo vedio avaialable - [IBY-Demo.mp4](https://github.com/JaswanthPalla149/AI_Powered_Resume_Cover_Letter_Generator/blob/main/IBY-Demo.mp4)
 ---
 ## How does it work?
