@@ -113,3 +113,6 @@ text
 7. Generated resume (LaTeX) and cover letter (text) saved locally.
 
 ---
+## **7. Prompts given to AI:**
+* Give me Python code using pyQt to run an interacting UI that can interact with a Flask API server hosted @localhost:5000, make sure to have UI activity while the prog is connected and waiting for reply from server.
+* From the given architecture give me the best prompt that I can ask to an LLM for this task of generation of resume.

@@ -115,3 +115,9 @@ User Experience: Desktop application with progress UI and asynchronous processin
 Security: API keys managed by environment variables, model served locally to avoid dependency on external compute.
 
 This concise system design document presents a strong foundation from architectural, data, component, and technology standpoints suitable for software engineering evaluation and further development.
+---
+**7. Prompts given to AI:**
+* Tell me is Llama-3.1-8B-Instruct good for working as API ?
+* See I've the trainingdata as ./trainingdata.txt give me code to finetune the model using LoRA using this data.
+* I'm seeing hallucinations too much, change the model?
+* Irrespective of the temperature, I'm seeing the hallucinations way too high!
