@@ -1,4 +1,4 @@
-# AI-Powered Resume Tailoring Agent
+# Palla Jaswanthroyal CS23B034 IIT TIRUPATI
 
 ## What is this project?
 Students often struggle when applying to jobs:  
